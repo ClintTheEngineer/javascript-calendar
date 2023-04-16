@@ -143,7 +143,8 @@ let j = 1;
   
 
 
-  btnDoubleMinus.addEventListener('click', ()=>{
+btnDoubleMinus.addEventListener('click', ()=>{
+    currentYear--;
     const leapDay = (currentYear % 4 == 0 && currentYear % 100 != 0 || currentYear % 400 == 0) ? 29 : 28;
 const daysArray = [31,leapDay,31,30,31,30,31,31,30,31,30,31];
 
@@ -152,29 +153,39 @@ const daysArray = [31,leapDay,31,30,31,30,31,31,30,31,30,31];
       tds[i].textContent = '';
     }
 
-    currentYear--;
-    article.textContent = `${monthsArray[monthIndex]}  ${currentYear}`
     
+    article.textContent = `${monthsArray[monthIndex]}  ${currentYear}`
+        
 let chosenDate = new Date(`${monthsArray[monthIndex]} 1, ${currentYear}`);
 let leadingDay = days[chosenDate.getDay()];
+
+   const month = monthsArray[monthIndex];
+   const monthIndexInArray = monthsArray.indexOf(month);
+   const monthLength = daysArray[monthIndexInArray];
+   
 
 let j = 1;
     for (let i = 1; i <= monthLength; i++) {        
       if (leadingDay === days[i-1]) {
-        for (let k = i; k <= numSquares; k++) {
+        let z = i;
+        for (let k = i; k <= monthLength+z; k++) {
           squares[`sq-${k}`].textContent = j;
           j++;
-          if(k > monthLength)
-          break;
+          if(j >= monthLength){
+            for (let l = monthLength+z; l <= numSquares; l++) {
+              squares[`sq-${l}`].textContent = '';
+            }            
+          };
         }
-        break;
       }
     }
 
 })
 
 btnDoubleAdd.addEventListener('click', ()=>{
+  currentYear++;
   const leapDay = (currentYear % 4 == 0 && currentYear % 100 != 0 || currentYear % 400 == 0) ? 29 : 28;
+  
 const daysArray = [31,leapDay,31,30,31,30,31,31,30,31,30,31];
 
   const tds = [td, td2, td3, td4, td5, td6, td7];
@@ -182,22 +193,29 @@ const daysArray = [31,leapDay,31,30,31,30,31,31,30,31,30,31];
     tds[i].textContent = '';
   }
 
-  currentYear++;
   article.textContent = `${monthsArray[monthIndex]}  ${currentYear}`
   
 let chosenDate = new Date(`${monthsArray[monthIndex]} 1, ${currentYear}`);
 let leadingDay = days[chosenDate.getDay()];
 
+const month = monthsArray[monthIndex];
+   const monthIndexInArray = monthsArray.indexOf(month);
+   const monthLength = daysArray[monthIndexInArray];
+
 let j = 1;
-  for (let i = 1; i <= monthLength; i++) {        
-    if (leadingDay === days[i-1]) {
-      for (let k = i; k <= numSquares; k++) {
-        squares[`sq-${k}`].textContent = j;
-        j++;
-        if(k > monthLength)
-        break;
+    for (let i = 1; i <= monthLength; i++) {        
+      if (leadingDay === days[i-1]) {
+        let z = i;
+        for (let k = i; k <= monthLength+z; k++) {
+          squares[`sq-${k}`].textContent = j;
+          j++;
+          if(j >= monthLength){
+            for (let l = monthLength+z; l <= numSquares; l++) {
+              squares[`sq-${l}`].textContent = '';
+            }            
+          };
+        }
       }
-      break;
     }
-  }
+
 })
